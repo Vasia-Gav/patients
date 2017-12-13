@@ -1,0 +1,9 @@
+imports:
+  - { resource: actions/* }
+  - { resource: voters/* }
+
+services:
+    serializer.patient_normalizer:
+        class: AppBundle\Serializer\PatientNormalizer
+        tags:
+           - serializer.normalizer
