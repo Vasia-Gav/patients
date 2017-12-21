@@ -8,7 +8,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class PatientController extends BaseController
 {
     /**
-     * @Route(path="/patients", methods={"GET"})
+     * @Route(path="/patients", methods={"GET"}, name="patients")
      *
      * @ApiDoc(
      *     resource = true,
@@ -35,7 +35,7 @@ class PatientController extends BaseController
 
 
     /**
-     * @Route(path="/groups", methods={"GET"})
+     * @Route(path="/groups", methods={"GET"}, name="groups")
      *
      * @ApiDoc(
      *     resource = true,
@@ -54,7 +54,7 @@ class PatientController extends BaseController
      * )
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     */
+     */ 
     public function listGroupAction()
     {
         return $this->action("action.group.list");

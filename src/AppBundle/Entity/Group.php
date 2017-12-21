@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -33,6 +34,13 @@ class Group
      * @Groups("default")
      */
     private $name;
+
+    /**
+     * @var ArrayCollection|Patient[]
+     *
+     * @ORM\ManyToMany(targetEntity="Patient", mappedBy="groups")
+     */
+    private $patients;
 
     /**
      * @return int
@@ -70,4 +78,21 @@ class Group
     {
         return $this->name;
     }
+
+    /**
+     * @return Patient[]|ArrayCollection
+     */
+    public function getPatients()
+    {
+        return $this->patients;
+    }
+
+    /**
+     * @param Patient[]|ArrayCollection $patients
+     */
+    public function setPatients($patients)
+    {
+        $this->patients = $patients;
+    }
+
 }

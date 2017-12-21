@@ -4,9 +4,11 @@ services:
         class: AppBundle\Action\ListAction
         arguments:
             - AppBundle\Entity\Patient
-        calls: [['setOptions', [{filters: ['status', 'groups', 'query']}]]]
+            - "@router"
+        calls: [['setOptions', [{filters: ['status', 'groups', 'query', 'order-by']}]]]
     action.group.list:
         parent: core.action.abstract
         class: Requestum\ApiBundle\Action\ListAction
         arguments:
             - AppBundle\Entity\Group
+        calls: [['setOptions', [{filters: ['active']}]]]

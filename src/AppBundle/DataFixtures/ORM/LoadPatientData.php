@@ -17,6 +17,10 @@ class LoadPatientData extends AbstractFixture
      */
     public function load(ObjectManager $manager)
     {
+        $group = new Group();
+        $group->setName('Manuela');
+        $manager->persist($group);
+
         $group1 = new Group();
         $group1->setName('Ittri');
         $manager->persist($group1);
@@ -29,9 +33,9 @@ class LoadPatientData extends AbstractFixture
         $group3->setName('Mende');
         $manager->persist($group3);
 
-        $group = new Group();
-        $group->setName('');
-        $manager->persist($group);
+        $group4 = new Group();
+        $group4->setName('Empty');
+        $manager->persist($group4);
 
         $patient = new Patient();
         $patient->setEmail('artur@gmail.com');
@@ -99,6 +103,27 @@ class LoadPatientData extends AbstractFixture
         $patient->setStatus(true);
         $patient->addGroup($group1);
         $patient->addGroup($group2);
+        $patient->setPhone('+1223456891');
+
+        $manager->persist($patient);
+
+        for($i=0; $i<2000; $i++) {
+            $patient = new Patient();
+            $patient->setEmail('kirill@gmail.com');
+            $patient->setName('Heike Otto' . $i);
+            $patient->setStatus(true);
+            $patient->addGroup($group1);
+            $patient->addGroup($group2);
+            $patient->setPhone('+1223456891');
+
+            $manager->persist($patient);
+        }
+
+        $patient = new Patient();
+        $patient->setEmail('kirill@gmail.com');
+        $patient->setName('Test User');
+        $patient->setStatus(false);
+        $patient->addGroup($group4);
         $patient->setPhone('+1223456891');
 
         $manager->persist($patient);

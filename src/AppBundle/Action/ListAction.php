@@ -9,11 +9,20 @@
 namespace AppBundle\Action;
 
 
+use AppBundle\Repository\PatientRepository;
 use Pagerfanta\Pagerfanta;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ListAction extends \Requestum\ApiBundle\Action\ListAction
 {
+    private $router;
+
+    public function __construct($entity, UrlGeneratorInterface $router)
+    {
+        parent::__construct($entity);
+        $this->router = $router;
+    }
     /**
      * @param Pagerfanta $data
      * @param int $status
@@ -29,7 +38,7 @@ class ListAction extends \Requestum\ApiBundle\Action\ListAction
                         [
                             'id' => 'AZ',
                             'name' => 'sortation',
-                            'url' => 'patient-list',
+                            'url' => $this->router->generate('patients', ['status' =>1 ], UrlGeneratorInterface::ABSOLUTE_URL),
                             'title' => 'Patienten-Liste',
                             'collection' => 'patient',
                             'group' => false,
@@ -37,20 +46,13 @@ class ListAction extends \Requestum\ApiBundle\Action\ListAction
                                 [
                                     'status' => 1,
                                 ],
-                            'filterBox' =>
-                                [
-                                    0 =>
-                                        [
-                                            'type' => 'text',
-                                            'value' => 'label',
-                                        ],
-                                ],
+                            'filterBox' => PatientRepository::$SEARCH_FIELDS,
                         ],
                     1 =>
                         [
                             'id' => 'group',
                             'name' => 'group',
-                            'url' => 'patient-list',
+                            'url' => $this->router->generate('groups', [], UrlGeneratorInterface::ABSOLUTE_URL),
                             'title' => 'Patienten-Liste',
                             'collection' => 'patient',
                             'group' => true,
@@ -59,7 +61,7 @@ class ListAction extends \Requestum\ApiBundle\Action\ListAction
                         [
                             'id' => 'archive',
                             'name' => 'archive',
-                            'url' => 'patient-list-archived',
+                            'url' => $this->router->generate('patients', ['status' =>0 ], UrlGeneratorInterface::ABSOLUTE_URL),
                             'title' => 'Liste der archivierten Patienten',
                             'collection' => 'patient',
                             'group' => false,
