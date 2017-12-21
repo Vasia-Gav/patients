@@ -1,6 +1,6 @@
 imports:
   - { resource: actions/* }
-  - { resource: voters/* }
+
 
 services:
     serializer.patient_normalizer:
